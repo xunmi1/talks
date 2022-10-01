@@ -3,7 +3,7 @@
   "private": true,
   "author": "xunmi <xunmi1@outlook.com>",
   "scripts": {
-    "build": "pnpm -r run build",
+    "build": "rimraf dist && pnpm -r run build",
     "format": "prettier -w \"**/*\" -u"
   },
   "packageManager": "pnpm@7.12.2",
@@ -12,8 +12,10 @@
     "@slidev/cli": "^0.36.5",
     "@slidev/theme-default": "^0.21.2",
     "@xunmi/prettier-config": "^1.0.2",
+    "playwright-chromium": "^1.26.1",
     "pnpm": "^7.12.2",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2"
   },
   "engines": {
     "node": ">=16",
