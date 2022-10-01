@@ -1,0 +1,22 @@
+{
+  "name": "talks",
+  "private": true,
+  "author": "xunmi <xunmi1@outlook.com>",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "format": "prettier -w \"**/*\" -u"
+  },
+  "packageManager": "pnpm@7.12.2",
+  "prettier": "@xunmi/prettier-config",
+  "devDependencies": {
+    "@slidev/cli": "^0.36.5",
+    "@slidev/theme-default": "^0.21.2",
+    "@xunmi/prettier-config": "^1.0.2",
+    "pnpm": "^7.12.2",
+    "prettier": "^2.7.1"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  }
+}
