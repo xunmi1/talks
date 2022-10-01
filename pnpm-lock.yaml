@@ -21,7 +21,10 @@ importers:
       rimraf: 3.0.2
 
   subtyping-in-typescript:
-    specifiers: {}
+    specifiers:
+      '@iconify-json/mdi': ^1.1.33
+    devDependencies:
+      '@iconify-json/mdi': 1.1.33
 
 packages:
 
@@ -109,6 +112,12 @@ packages:
 
   /@iconify-json/carbon/1.1.8:
     resolution: {integrity: sha512-aSoMgvZyvIXadLbMXcfS+qy8CVxSExvvp8Vd/nCrupLFc0KLKSukRInnVNc63zaHqoe1NBf5xUrgfyRYYfaKWQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/mdi/1.1.33:
+    resolution: {integrity: sha512-P8zIjwYvQ6SsmHc02O4oNV3jsqbL4bXcfKSt9MfCPMBvF9CLzz6QHMzQgt/Okgsb8wfhkfSQeREp+dSxV9pLRA==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

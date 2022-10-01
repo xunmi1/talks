@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build --out ../dist/subtyping-in-typescript",
+    "export": "slidev export --dark"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.1.33"
+  }
+}
