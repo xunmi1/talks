@@ -6,17 +6,15 @@ exportFilename: 'subtyping-in-typescript.pdf'
 favicon: https://api.iconify.design/mdi:language-typescript.svg
 # 幻灯片的长宽比
 aspectRatio: '16/9'
-layout: center
+layout: cover
 ---
 
 # <MdiLanguageTypescript class="text-[#3178c6]" /> Subtyping in TypeScript
 
-<p class="text-xl">TypeScript 中的子类型</p>
+<p class="text-2xl">TypeScript 中的子类型</p>
 
 <footer class="absolute bottom-10 right-14 text-sm opacity-60">2022-10</footer>
 
----
-layout: intro
 ---
 
 # Subtyping
@@ -41,16 +39,16 @@ layout: two-cols
 
 ## 名义子类型
 
-如 `Java`、`C#`、 `Python` 的[抽象基类](https://docs.python.org/3.9/library/abc.html)等
+如 Java、C#、 Python 的[抽象基类](https://docs.python.org/3.9/library/abc.html)等
 
 <div class="min-h-20">
 
 - 必须显式声明子类型关系
-- 类型声明的名字相同算是类型相同
+- 类型声明的名字相同时，类型相同
 
 </div>
 
-```java
+```java {all|5}
 interface T {
    int add(int value);
 }
@@ -68,7 +66,7 @@ T b = a;
 
 ## 结构子类型
 
-如 `TypeScript`、`Python` 的[协议](https://peps.python.org/pep-0544/)等
+如 TypeScript、Python 的[协议](https://peps.python.org/pep-0544/)等
 
 <div class="min-h-20">
 
@@ -77,7 +75,7 @@ T b = a;
 
 </div>
 
-```ts
+```ts {all|2,6-7}
 type T = {
   add: (value: number) => number | void;
 }
@@ -91,5 +89,24 @@ const a: S = {/** ... */}
 const b: T = a;
 ```
 
+<v-click>
+
+在 TypeScript 中，可以使用 `unique symbol` 模拟实现名义子类型
+
+</v-click>
 ---
 
+# Subtyping rules
+
+子类型规则
+
+|     |     |     |
+| --- | --- | --- |
+| S-Refl  | 自反性 | $\frac{}{S\ <:\ S}$ |
+| S-Trans | 传递性 | $\frac{S\ <:\ U\quad U\ <:\ T}{S\ <:\ T}$ |
+| S-Top   |       | $\frac{}{S\ <:\ unknown}$ |
+| S-Arrow |       | $\frac{T_1\ <:\ S_1\quad S_2\ <:\ T_1}{S_1\ \rightarrow\ S_2\ <:\ T_1\ \rightarrow\ T_2}$ |
+
+<!-- 在 TypeScript 中 `unknown` 作为顶层类型 -->
+
+---
