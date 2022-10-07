@@ -11,9 +11,9 @@ layout: cover
 
 # <MdiLanguageTypescript class="text-[#3178c6]" /> Subtyping in TypeScript
 
-<p class="text-2xl">TypeScript 中的子类型</p>
+<p class="text-2xl indent-84px">TypeScript 中的子类型</p>
 
-<footer class="absolute bottom-10 right-14 text-sm opacity-60">2022-10</footer>
+<footer class="absolute bottom-10 right-14 text-sm opacity-60">xunmi 2022-10</footer>
 
 ---
 
@@ -21,11 +21,54 @@ layout: cover
 
 子类型
 
-如果类型 S 的实例可以安全地替换类型 T 的实例，则类型 S 是类型 T 的子类型，记作 S <: T
+如果类型 $S$ 的实例可以安全地替换类型 $T$ 的实例，则类型 $S$ 是类型 $T$ 的子类型，记作 $S <: T$
 
 即符合里氏替换原则（Liskov Substitution principle）
 
 > 在面向对象程序设计中，多态一般仅指的是 “子类型多态”
+
+---
+
+# Type compatibility
+
+类型兼容
+
+```mermaid {scale: 0.56 }
+flowchart TB
+
+  subgraph Top type
+    unknown
+  end
+  subgraph Bottom type
+    never
+  end
+
+  unknown --> undefined & null & empty["{}"] & void
+  empty --> number & bigint & boolean & string & symbol & object
+  string --> templateString[template literal string] --> never
+  symbol --> uniqueSymbol[unique symbol] --> never
+  object --> array & function & ctor[constructor]
+  array --> tuple --> never
+  function & ctor --> never
+  null & undefined & void -----> never
+  number & bigint & boolean ---> never
+```
+
+<style>
+.notes p {
+  margin: 0;
+}
+</style>
+
+<div class="text-xs opacity-80 notes">
+
+- `void` 类型情况特殊，[`undefined` 类型可以**分配**给 `void` 类型](https://www.typescriptlang.org/docs/handbook/type-compatibility.html#any-unknown-object-void-undefined-null-and-never-assignability)
+
+- TypeScript v4.8 中，[`unknown` 类型被近似处理为 `{} | null | undefined`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-8.html#improved-intersection-reduction-union-compatibility-and-narrowing)
+
+- `any` 类型的作用是放弃类型检查
+
+</div>
 
 ---
 layout: two-cols
@@ -96,6 +139,7 @@ const b: T = a;
 在 TypeScript 中，可以使用 `unique symbol` 模拟实现名义子类型
 
 </v-click>
+
 ---
 
 # Subtyping rules
@@ -127,8 +171,9 @@ const b: T = a;
 | --- | --- | --- |
 | covariant     | 协变 | 保持子类型的顺序关系
 | contravariant | 逆变 | 逆转子类型的顺序关系
-| invariant     | 不变 | 不会发生变化
+| invariant     | 不变 | 协变且逆变，即不发生变化
 
+<div class="mt-12">
 <v-click>
 
 ```ts
@@ -140,6 +185,7 @@ const toNumber: (x: string) => number | undefined = toLooseNumber;
 ```
 
 </v-click>
+</div>
 
 ---
 
@@ -169,11 +215,10 @@ const toNumber: (x: S1) => S2 = toLooseNumber;
 ```
 
 <v-click>
-<div class="text-center text-2xl text-orange-400 mt-12">
-参数类型逆变，返回类型协变
+<div class="text-center text-3xl text-orange-400 mt-12">
+参数位置类型逆变，返回位置类型协变
 </div>
 </v-click>
-
 
 ---
 
@@ -182,7 +227,7 @@ const toNumber: (x: S1) => S2 = toLooseNumber;
 不变
 
 <div class="grid grid-cols-2 gap-8">
-  <div>
+<div>
 
 ```ts
 const list1: number[] = [];
@@ -204,29 +249,32 @@ interface Array<T> {
 }
 ```
 
-  </div>
-
-  <div>
-  <v-click>
-  
-  - `push`: T 在函数类型的参数位置，要求逆变
-  - `pop`: T 在函数类型的返回位置，要求协变
-
-  所以, T 是不变的，`number[]` 和 `unknown[]` 不存在子类型关系
-  <v-click>
-  
-  <div class="text-orange-400">
-
-  在 TypeScript 中，允许了**方法**的参数是双变的
-
-  </div>
-
-  导致 T 是协变，`number[]` 是 `unknown[]` 是的子类型
-
-  </v-click>
-  </v-click>
-  </div>
 </div>
+
+<div>
+
+<v-click>
+  
+- `push`: $T$ 在函数类型的参数位置，要求逆变
+- `pop`: $T$ 在函数类型的返回位置，要求协变
+
+所以, $T$ 类型不变，`number[]` 和 `unknown[]` 不存在子类型关系
+
+</v-click>
+<v-click>
+<div class="text-orange-400 mt-12">
+
+在 TypeScript 中，允许了**方法**的参数是双变的
+
+</div>
+
+所以, $T$ 类型协变，`number[]` 是 `unknown[]` 是的子类型
+
+</v-click>
+</div>
+</div>
+
+[TypeScript v4.7 中，可以手动标记类型协变（out）或逆变（in）](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#optional-variance-annotations-for-type-parameters)
 
 ---
 
@@ -234,8 +282,8 @@ interface Array<T> {
 
 记录（对象）类型
 
-- 宽度子类型（width subtyping）：对象类型 S 比 T 拥有更多的成员类型
-- 深度子类型（depth subtyping）：对象类型 S 的只读（immutable）成员类型可以替换为 T 对应的成员类型（协变）
+- 宽度子类型（width subtyping）：对象类型 $S$ 比 $T$ 拥有更多的成员类型
+- 深度子类型（depth subtyping）：对象类型 $S$ 的只读（immutable）成员类型可以替换为 $T$ 对应的成员类型（协变）
 
 ```ts {all|7,11}
 type T = {
@@ -254,8 +302,8 @@ type S2 = {
 
 <v-after>
 
-- S1 比 T 多出 `value` 字段，S1 是 T 的子类型
-- S2 的成员字段的类型是 T 对应字段的子类型，S2 是 T 的子类型
+- $S1$ 比 $T$ 多出 `value` 字段，$S1$ 是 $T$ 的子类型
+- $S2$ 的成员字段的类型是 $T$ 对应字段的子类型，$S2$ 是 $T$ 的子类型
 
 </v-after>
 
@@ -281,7 +329,7 @@ data1.value.toFixed();
 
 只能让对象的 `immutable` 字段协变，而 `mutable` 字段不变
 
-`value` 不是只读字段，所以 S 和 T 不存在子类型关系
+`value` 不是只读字段，所以 $S$ 和 $T$ 不存在子类型关系
 
 </v-click>
 
@@ -293,6 +341,76 @@ data1.value.toFixed();
 
 </div>
 
-所以 S 是 T 的子类型
+所以 $S$ 是 $T$ 的子类型
 
 </v-click>
+
+---
+
+# Rust subtyping
+
+Rust 中的子类型[^1]
+
+<img src="/rust-subtyping.png" alt="Rust subtyping" class="h-2/3 m-x-auto mb-8" />
+
+[^1]: [The Rustonomicon - Subtyping and Variance](https://doc.rust-lang.org/nomicon/subtyping.html)
+
+---
+
+## Intersection Types
+
+交集类型
+
+如果类型 $T_1,T_2,...,T_n$ 的交集类型为 $S$，则 $S$ 是 $T_1,...,T_n$ 的子类型
+
+```ts {1-5|7-11}
+type T1 = number;
+type T2 = string;
+
+// `never`
+type S = T1 & T2;
+
+type T1 = { name: string };
+type T2 = { value: number };
+
+// `{ name: string; value: number }`
+type S = T1 & T2;
+```
+
+---
+
+# Union Types
+
+联合类型
+
+如果类型 $S_1,S_2,...,S_n$ 的联合类型为 $T$，则 $S_1,...,S_n$ 是 $T$ 的子类型
+
+```ts {1-5|7-11}
+type S1 = number;
+type S2 = string;
+
+// `number` 或者 `string`
+type T = S1 | S2;
+
+type S1 = { name: string };
+type S2 = { value: number };
+
+// `{ name: string }` 或者 `{ value: number }`
+type T = S1 | S2;
+```
+
+---
+layout: quote
+---
+
+# References
+
+参考资料
+
+[Wikipedia - Subtyping](https://en.wikipedia.org/wiki/Subtyping)
+
+[From OO, to OO: Subtyping as a Cross-cutting Language Feature](https://paulz.me/files/subtyping.pdf)
+
+[Subtyping in TypeScript](https://zhuanlan.zhihu.com/p/371112840)
+
+[The TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
