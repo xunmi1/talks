@@ -2,8 +2,9 @@
   "private": true,
   "scripts": {
     "dev": "slidev",
-    "build": "slidev build --out ../dist/subtyping-in-typescript",
-    "export": "slidev export --dark"
+    "build": "slidev build --base /subtyping-in-typescript/ --out ../dist/subtyping-in-typescript",
+    "export": "slidev export --dark",
+    "format": "slidev format"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.33"

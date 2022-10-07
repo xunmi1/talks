@@ -2,10 +2,9 @@
 title: Subtyping in TypeScript
 highlighter: shiki
 colorSchema: dark
-exportFilename: 'subtyping-in-typescript.pdf'
+exportFilename: subtyping-in-typescript.pdf
 favicon: https://api.iconify.design/mdi:language-typescript.svg
-# 幻灯片的长宽比
-aspectRatio: '16/9'
+aspectRatio: 16/9
 layout: cover
 ---
 
@@ -14,6 +13,7 @@ layout: cover
 <p class="text-2xl indent-88px">TypeScript 中的子类型</p>
 
 <footer class="absolute bottom-10 right-14 text-sm opacity-60">xunmi 2022-10</footer>
+
 
 ---
 
@@ -34,7 +34,14 @@ layout: cover
 
 </div>
 
+
 ---
+
+<style>
+.slidev-layout .notes p {
+  margin: 0;
+}
+</style>
 
 # Type compatibility
 
@@ -61,12 +68,6 @@ flowchart TB
   number & bigint & boolean ---> never
 ```
 
-<style>
-.notes p {
-  margin: 0;
-}
-</style>
-
 <div class="text-xs opacity-80 notes">
 
 - `void` 类型情况特殊，[`undefined` 类型可以**分配**给 `void` 类型](https://www.typescriptlang.org/docs/handbook/type-compatibility.html#any-unknown-object-void-undefined-null-and-never-assignability)
@@ -77,12 +78,13 @@ flowchart TB
 
 </div>
 
+
 ---
 layout: two-cols
 ---
 
 <style>
-.slidev-layout {
+.slidev-layout[layout="two-cols"] {
   gap: 2rem;
 }
 </style>
@@ -147,6 +149,7 @@ const b: T = a;
 
 </v-click>
 
+
 ---
 
 # Subtyping rules
@@ -167,6 +170,7 @@ const b: T = a;
 > $T_1 \rightarrow T_2$：代表构造了参数类型是 T1，返回值类型是 T2 的函数类型
 
 </div>
+
 
 ---
 
@@ -193,6 +197,7 @@ const toNumber: (x: string) => number | undefined = toLooseNumber;
 
 </v-click>
 </div>
+
 
 ---
 
@@ -227,6 +232,7 @@ const toNumber: (x: S1) => S2 = toLooseNumber;
 </div>
 </v-click>
 
+
 ---
 
 # Invariance
@@ -259,7 +265,6 @@ interface Array<T> {
 </div>
 
 <div>
-
 <v-click>
   
 - `push`: $T$ 在函数类型的参数位置，要求逆变
@@ -268,6 +273,7 @@ interface Array<T> {
 所以, $T$ 类型不变，`number[]` 和 `unknown[]` 不存在子类型关系
 
 </v-click>
+
 <v-click>
 <div class="text-orange-400 mt-12">
 
@@ -282,6 +288,7 @@ interface Array<T> {
 </div>
 
 [TypeScript v4.7 中，可以手动标记类型协变（out）或逆变（in）](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#optional-variance-annotations-for-type-parameters)
+
 
 ---
 
@@ -313,6 +320,7 @@ type S2 = {
 - $S2$ 的成员字段的类型是 $T$ 对应字段的子类型，$S2$ 是 $T$ 的子类型
 
 </v-after>
+
 
 ---
 
@@ -352,6 +360,7 @@ data1.value.toFixed();
 
 </v-click>
 
+
 ---
 
 # Rust subtyping
@@ -361,6 +370,7 @@ Rust 中的子类型[^1]
 <img src="/rust-subtyping.png" alt="Rust subtyping" class="h-2/3 m-x-auto mb-8" />
 
 [^1]: [The Rustonomicon - Subtyping and Variance](https://doc.rust-lang.org/nomicon/subtyping.html)
+
 
 ---
 
@@ -384,6 +394,7 @@ type T2 = { value: number };
 type S = T1 & T2;
 ```
 
+
 ---
 
 # Union Types
@@ -405,6 +416,7 @@ type S2 = { value: number };
 // `{ name: string }` 或者 `{ value: number }`
 type T = S1 | S2;
 ```
+
 
 ---
 layout: quote
