@@ -11,7 +11,7 @@ layout: cover
 
 # <MdiLanguageTypescript class="text-[#3178c6]" /> Subtyping in TypeScript
 
-<p class="text-2xl indent-84px">TypeScript 中的子类型</p>
+<p class="text-2xl indent-88px">TypeScript 中的子类型</p>
 
 <footer class="absolute bottom-10 right-14 text-sm opacity-60">xunmi 2022-10</footer>
 
@@ -21,11 +21,18 @@ layout: cover
 
 子类型
 
-如果类型 $S$ 的实例可以安全地替换类型 $T$ 的实例，则类型 $S$ 是类型 $T$ 的子类型，记作 $S <: T$
+如果类型 $S$ 的对象可以安全地替换类型 $T$ 的对象，则类型 $S$ 是类型 $T$ 的子类型，记作 $S <: T$
 
 即符合里氏替换原则（Liskov Substitution principle）
 
-> 在面向对象程序设计中，多态一般仅指的是 “子类型多态”
+一个对象可能同时属于多种类型, 在面向对象程序设计中，多态一般指的是 “子类型多态”
+
+<div class="mt-12">
+
+- 子类型为了实现**可替换性**，反映了类型之间的关系
+- 继承是为了实现**代码复用**，一般同时声明了子类型关系
+
+</div>
 
 ---
 
@@ -66,7 +73,7 @@ flowchart TB
 
 - TypeScript v4.8 中，[`unknown` 类型被近似处理为 `{} | null | undefined`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-8.html#improved-intersection-reduction-union-compatibility-and-narrowing)
 
-- `any` 类型的作用是放弃类型检查
+- `any` 类型被视为 “放弃类型检查”
 
 </div>
 
