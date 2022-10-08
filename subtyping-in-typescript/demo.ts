@@ -14,7 +14,7 @@ const toLooseNumber: (x: unknown) => number = x => {
   return Number(x);
 };
 
-const toNumber: (x: string) => number | undefined = toLooseNumber;
+const toNumber: (x: string) => unknown = toLooseNumber;
 
 const list1: number[] = [];
 

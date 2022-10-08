@@ -12,7 +12,7 @@ layout: cover
 
 <p class="text-2xl indent-88px">TypeScript 中的子类型</p>
 
-<footer class="absolute bottom-10 right-14 text-sm opacity-60">xunmi 2022-10</footer>
+<footer class="absolute bottom-10 right-14 text-sm opacity-50">xunmi 2022-10</footer>
 
 
 ---
@@ -37,12 +37,6 @@ layout: cover
 
 ---
 
-<style>
-.slidev-layout .notes p {
-  margin: 0;
-}
-</style>
-
 # Type compatibility
 
 类型兼容
@@ -57,8 +51,8 @@ flowchart TB
     never
   end
 
-  unknown --> undefined & null & empty["{}"] & void
-  empty --> number & bigint & boolean & string & symbol & object
+  unknown --> undefined & null & notNil["{}"] & void
+  notNil --> number & bigint & boolean & string & symbol & object
   string --> templateString[template literal string] --> never
   symbol --> uniqueSymbol[unique symbol] --> never
   object --> array & function & ctor[constructor]
@@ -68,12 +62,10 @@ flowchart TB
   number & bigint & boolean ---> never
 ```
 
-<div class="text-xs opacity-80 notes">
+<div class="text-xs opacity-50 !all:m-0">
 
 - `void` 类型情况特殊，[`undefined` 类型可以**分配**给 `void` 类型](https://www.typescriptlang.org/docs/handbook/type-compatibility.html#any-unknown-object-void-undefined-null-and-never-assignability)
-
 - TypeScript v4.8 中，[`unknown` 类型被近似处理为 `{} | null | undefined`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-8.html#improved-intersection-reduction-union-compatibility-and-narrowing)
-
 - `any` 类型被视为 “放弃类型检查”
 
 </div>
@@ -97,7 +89,7 @@ layout: two-cols
 
 - 必须显式声明子类型关系
 - 类型声明的名字相同时，类型相同
-- 如 Java、C#、 Python 的[抽象基类](https://docs.python.org/3.9/library/abc.html)等
+- 如 Java、C#、Python 的[抽象基类](https://docs.python.org/3.9/library/abc.html)等
 
 </div>
 
@@ -131,12 +123,12 @@ T b = a;
 
 ```ts {all|2,6-7}
 type T = {
-  add: (value: number) => number | undefined;
+  readonly add: (value: number) => number | undefined;
 }
 
 type S = {
   readonly result: number;
-  add: (value: number | string) => number;
+  readonly add: (value: number | string) => number;
 }
 
 const a: S = {/** ... */} 
@@ -219,7 +211,7 @@ $$
 type T1 = unknown;
 type T2 = number;
 type S1 = string;
-type S2 = number | undefined;
+type S2 = unknown;
 
 const toLooseNumber: (x: T1) => T2 = { /** ... */ };
 
@@ -252,7 +244,7 @@ list2.push('😵');
 list1[0].toFixed();
 ```
 
-```ts {4-5}
+```ts {4-6}
 // lib.es5.d.ts 
 interface Array<T> {
   // ...
@@ -272,22 +264,31 @@ interface Array<T> {
 
 所以, $T$ 类型不变，`number[]` 和 `unknown[]` 不存在子类型关系
 
+<!-- number[] <: readonly unknown[] -->
+
 </v-click>
 
 <v-click>
-<div class="text-orange-400 mt-12">
 
 在 TypeScript 中，允许了**方法**的参数是双变的
 
-</div>
+所以, $T$ 类型协变，`number[]` 是 `unknown[]` 的子类型
 
-所以, $T$ 类型协变，`number[]` 是 `unknown[]` 是的子类型
+> 安全的协变数组是 $readonly\ T[]$
 
 </v-click>
 </div>
 </div>
 
-[TypeScript v4.7 中，可以手动标记类型协变（out）或逆变（in）](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#optional-variance-annotations-for-type-parameters)
+<v-click>
+<div class="text-xs opacity-50 !all:m-0">
+
+- [TypeScript v4.7 中，可以手动标记类型协变（out）或逆变（in）](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#optional-variance-annotations-for-type-parameters)
+- Java 支持协变数组，但报运行时错误 `ArrayStoreException`。使用 `extends` 限制泛型协变，`super` 限制逆变
+- Swift 不支持协变数组，但编译器会进行隐式类型转换
+
+</div>
+</v-click>
 
 
 ---
@@ -296,8 +297,8 @@ interface Array<T> {
 
 记录（对象）类型
 
-- 宽度子类型（width subtyping）：对象类型 $S$ 比 $T$ 拥有更多的成员类型
-- 深度子类型（depth subtyping）：对象类型 $S$ 的只读（immutable）成员类型可以替换为 $T$ 对应的成员类型（协变）
+- 宽度子类型（width subtyping）：$S$ 比 $T$ 拥有更多的成员类型
+- 深度子类型（depth subtyping）：$S$ 的只读（immutable）成员类型可以替换为 $T$ 对应的成员类型
 
 ```ts {all|7,11}
 type T = {
@@ -344,7 +345,7 @@ data1.value.toFixed();
 
 只能让对象的 `immutable` 字段协变，而 `mutable` 字段不变
 
-`value` 不是只读字段，所以 $S$ 和 $T$ 不存在子类型关系
+`value` 是**可变**字段，所以 $S$ 和 $T$ 不存在子类型关系
 
 </v-click>
 
@@ -363,13 +364,38 @@ data1.value.toFixed();
 
 ---
 
+<style>
+.tiny-table :is(td, th) {
+  padding: 0.5rem !important;
+}
+</style>
+
 # Rust subtyping
 
-Rust 中的子类型[^1]
+Rust 中的子类型
 
-<img src="/rust-subtyping.png" alt="Rust subtyping" class="h-2/3 m-x-auto mb-8" />
+<div class="tiny-table">
 
-[^1]: [The Rustonomicon - Subtyping and Variance](https://doc.rust-lang.org/nomicon/subtyping.html)
+|     |     | 'a  | T   | U   |
+| --- | --- |:---:|:---:|:---:|
+| * | `&'a T `        | covariant | covariant         |           |
+| * | `&'a mut T`     | covariant | invariant         |           |
+| * | `Box<T>`        |           | covariant         |           |
+|   | `Vec<T>`        |           | covariant         |           |
+| * | `UnsafeCell<T>` |           | invariant         |           |
+|   | `Cell<T>`       |           | invariant         |           |
+| * | `fn(T) -> U`    |           | **contra**variant | covariant |
+|   | `*const T`      |           | covariant         |           |
+|   | `*mut T`        |           | invariant         |           |
+
+</div>
+
+<div class="text-xs opacity-50 !all:m-0 mt-4">
+
+- `Cell` 用于实现内部可变性（Interior mutability）, 在运行时执行借用检查
+- [The Rustonomicon - Subtyping and Variance](https://doc.rust-lang.org/nomicon/subtyping.html)
+
+</div>
 
 
 ---
@@ -378,7 +404,7 @@ Rust 中的子类型[^1]
 
 交集类型
 
-如果类型 $T_1,T_2,...,T_n$ 的交集类型为 $S$，则 $S$ 是 $T_1,...,T_n$ 的子类型
+如果类型 $T_1,T_2,...,T_n$ 的交集类型为 $S$，则 $S$ 是 $T_1,...,T_n$ 各自的子类型
 
 ```ts {1-5|7-11}
 type T1 = number;
@@ -401,7 +427,7 @@ type S = T1 & T2;
 
 联合类型
 
-如果类型 $S_1,S_2,...,S_n$ 的联合类型为 $T$，则 $S_1,...,S_n$ 是 $T$ 的子类型
+如果类型 $S_1,S_2,...,S_n$ 的联合类型为 $T$，则 $S_1,...,S_n$ 均是 $T$ 的子类型
 
 ```ts {1-5|7-11}
 type S1 = number;
@@ -426,10 +452,7 @@ layout: quote
 
 参考资料
 
-[Wikipedia - Subtyping](https://en.wikipedia.org/wiki/Subtyping)
-
-[From OO, to OO: Subtyping as a Cross-cutting Language Feature](https://paulz.me/files/subtyping.pdf)
-
-[Subtyping in TypeScript](https://zhuanlan.zhihu.com/p/371112840)
-
-[The TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+- [Wikipedia - Subtyping](https://en.wikipedia.org/wiki/Subtyping)
+- [From OO, to OO: Subtyping as a Cross-cutting Language Feature](https://paulz.me/files/subtyping.pdf)
+- [Subtyping in TypeScript](https://zhuanlan.zhihu.com/p/371112840)
+- [The TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
