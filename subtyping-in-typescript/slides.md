@@ -25,7 +25,7 @@ layout: cover
 
 即符合里氏替换原则（Liskov Substitution principle）
 
-一个对象可能同时属于多种类型, 在面向对象程序设计中，多态一般指的是 “子类型多态”
+一个对象可能同时属于多种类型，在面向对象程序设计中，多态一般指的是 “子类型多态”
 
 <div class="mt-12">
 
@@ -153,13 +153,13 @@ const b: T = a;
 | S-Refl  | 自反性 | $\frac{}{S\ <:\ S}$ |
 | S-Trans | 传递性 | $\frac{S\ <:\ U\quad U\ <:\ T}{S\ <:\ T}$ |
 | S-Top   |       | $\frac{}{S\ <:\ unknown}$ |
-| S-Arrow |       | $\frac{T_1\ <:\ S_1\quad S_2\ <:\ T_1}{S_1\ \rightarrow\ S_2\ <:\ T_1\ \rightarrow\ T_2}$ |
+| S-Arrow |       | $\frac{T_1\ <:\ S_1\quad S_2\ <:\ T_2}{S_1\ \rightarrow\ S_2\ <:\ T_1\ \rightarrow\ T_2}$ |
 
 <div class="mt-12">
 
 > 在 TypeScript 中，`unknown` 是作为顶层类型
 
-> $T_1 \rightarrow T_2$：代表构造了参数类型是 T1，返回值类型是 T2 的函数类型
+> $T_1 \rightarrow T_2$：代表构造了参数类型是 $T1$，返回值类型是 $T2$ 的函数类型
 
 </div>
 
@@ -198,7 +198,7 @@ const toNumber: (x: string) => number | undefined = toLooseNumber;
 函数类型
 
 $$
-\frac{T_1\ <:\ S_1\quad S_2\ <:\ T_1}{S_1\ \rightarrow\ S_2\ <:\ T_1\ \rightarrow\ T_2}
+\frac{T_1\ <:\ S_1\quad S_2\ <:\ T_2}{S_1\ \rightarrow\ S_2\ <:\ T_1\ \rightarrow\ T_2}
 $$
 
 <div class="text-center">
@@ -262,7 +262,7 @@ interface Array<T> {
 - `push`: $T$ 在函数类型的参数位置，要求逆变
 - `pop`: $T$ 在函数类型的返回位置，要求协变
 
-所以, $T$ 类型不变，`number[]` 和 `unknown[]` 不存在子类型关系
+所以，$T$ 类型不变，`number[]` 和 `unknown[]` 不存在子类型关系
 
 <!-- number[] <: readonly unknown[] -->
 
@@ -272,7 +272,7 @@ interface Array<T> {
 
 在 TypeScript 中，允许了**方法**的参数是双变的
 
-所以, $T$ 类型协变，`number[]` 是 `unknown[]` 的子类型
+所以，$T$ 类型协变，`number[]` 是 `unknown[]` 的子类型
 
 > 安全的协变数组是 $readonly\ T[]$
 
@@ -376,23 +376,23 @@ Rust 中的子类型
 
 <div class="tiny-table">
 
-|     |     | 'a  | T   | U   |
-| --- | --- |:---:|:---:|:---:|
-| * | `&'a T `        | covariant | covariant         |           |
-| * | `&'a mut T`     | covariant | invariant         |           |
-| * | `Box<T>`        |           | covariant         |           |
-|   | `Vec<T>`        |           | covariant         |           |
-| * | `UnsafeCell<T>` |           | invariant         |           |
-|   | `Cell<T>`       |           | invariant         |           |
-| * | `fn(T) -> U`    |           | **contra**variant | covariant |
-|   | `*const T`      |           | covariant         |           |
-|   | `*mut T`        |           | invariant         |           |
+|     | 'a  | T   | U   |
+| --- |:---:|:---:|:---:|
+| `&'a T `        | covariant | covariant         |           |
+| `&'a mut T`     | covariant | invariant         |           |
+| `Box<T>`        |           | covariant         |           |
+| `Vec<T>`        |           | covariant         |           |
+| `UnsafeCell<T>` |           | invariant         |           |
+| `Cell<T>`       |           | invariant         |           |
+| `fn(T) -> U`    |           | **contra**variant | covariant |
+| `*const T`      |           | covariant         |           |
+| `*mut T`        |           | invariant         |           |
 
 </div>
 
 <div class="text-xs opacity-50 !all:m-0 mt-4">
 
-- `Cell` 用于实现内部可变性（Interior mutability）, 在运行时执行借用检查
+- `UnsafeCell`、`Cell` 用于实现内部可变性（Interior mutability），在运行时执行借用检查
 - [The Rustonomicon - Subtyping and Variance](https://doc.rust-lang.org/nomicon/subtyping.html)
 
 </div>
@@ -402,7 +402,7 @@ Rust 中的子类型
 
 ## Intersection Types
 
-交集类型
+交叉类型
 
 $$
 \frac{}{T_1\cap T_2\ <:\ T_1}
