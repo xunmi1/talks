@@ -404,7 +404,13 @@ Rust 中的子类型
 
 交集类型
 
-如果类型 $T_1,T_2,...,T_n$ 的交集类型为 $S$，则 $S$ 是 $T_1,...,T_n$ 各自的子类型
+$$
+\frac{}{T_1\cap T_2\ <:\ T_1}
+\qquad
+\frac{}{T_1\cap T_2\ <:\ T_2}
+\\[1em]
+\frac{S\ <:\ T_1\quad S<:\ T_2}{S\ <:\ T_1\cap T_2}
+$$
 
 ```ts {1-5|7-11}
 type T1 = number;
@@ -427,7 +433,13 @@ type S = T1 & T2;
 
 联合类型
 
-如果类型 $S_1,S_2,...,S_n$ 的联合类型为 $T$，则 $S_1,...,S_n$ 均是 $T$ 的子类型
+$$
+\frac{}{T_1\ <:\ T_1\cup T_2}
+\qquad
+\frac{}{T_2\ <:\ T_1\cup T_2}
+\\[1em]
+\frac{T_1\ <:\ S\quad T_2<:\ S}{T_1\cup T_2\ <:\ S}
+$$
 
 ```ts {1-5|7-11}
 type S1 = number;
