@@ -208,14 +208,14 @@ $$
 </div>
 
 ```ts
-type T1 = unknown;
-type T2 = number;
-type S1 = string;
-type S2 = unknown;
+type S1 = unknown;
+type S2 = number;
+type T1 = string;
+type T2 = unknown;
 
-const toLooseNumber: (x: T1) => T2 = { /** ... */ };
+const toLooseNumber: (x: S1) => S2 = { /** ... */ };
 
-const toNumber: (x: S1) => S2 = toLooseNumber;
+const toNumber: (x: T1) => T2 = toLooseNumber;
 ```
 
 <v-click>
@@ -270,7 +270,11 @@ interface Array<T> {
 
 <v-click>
 
+<div class="text-orange-400">
+
 在 TypeScript 中，允许了**方法**的参数是双变的
+
+</div>
 
 所以，$T$ 类型协变，`number[]` 是 `unknown[]` 的子类型
 
