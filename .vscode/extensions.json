@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "antfu.slidev",
-    "esbenp.prettier-vscode",
     "streetsidesoftware.code-spell-checker"
   ]
 }
