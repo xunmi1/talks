@@ -9,11 +9,11 @@ publish = "dist"
 command = "npx pnpm install --store=node_modules/.pnpm-store && npx pnpm build"
 
 [[redirects]]
-from = "/*"
-to = "/index.html"
+from = "/subtyping-in-typescript/*"
+to = "/subtyping-in-typescript/index.html"
 status = 200
 
 [[redirects]]
-from = "/subtyping-in-typescript/*"
-to = "/subtyping-in-typescript/index.html"
+from = "/*"
+to = "/index.html"
 status = 200
