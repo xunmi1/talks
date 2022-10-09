@@ -6,12 +6,13 @@
     "build": "rimraf dist && pnpm -r run build",
     "preview": "vite preview"
   },
-  "packageManager": "pnpm@7.12.2",
+  "packageManager": "pnpm@7.13.2",
   "devDependencies": {
     "@slidev/cli": "^0.36.5",
     "@slidev/theme-default": "^0.21.2",
-    "playwright-chromium": "^1.26.1",
-    "pnpm": "^7.12.2"
+    "playwright-chromium": "^1.27.0",
+    "pnpm": "^7.13.2",
+    "rimraf": "^3.0.2"
   },
   "engines": {
     "node": ">=16",
