@@ -1,0 +1,19 @@
+[build.environment]
+NODE_VERSION = "16"
+# prevent npm install
+# https://github.com/netlify/build/issues/1633
+NPM_FLAGS = "--version"
+
+[build]
+publish = "dist"
+command = "npx pnpm install --store=node_modules/.pnpm-store && npx pnpm build"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/subtyping-in-typescript/*"
+to = "/subtyping-in-typescript/index.html"
+status = 200
