@@ -149,11 +149,11 @@ const b: T = a;
 子类型规则
 
 |     |     |     |
-| --- | --- | --- |
-| S-Refl  | 自反性 | $\frac{}{S\ <:\ S}$ |
-| S-Trans | 传递性 | $\frac{S\ <:\ U\quad U\ <:\ T}{S\ <:\ T}$ |
-| S-Top   |       | $\frac{}{S\ <:\ unknown}$ |
-| S-Arrow |       | $\frac{T_1\ <:\ S_1\quad S_2\ <:\ T_2}{S_1\ \rightarrow\ S_2\ <:\ T_1\ \rightarrow\ T_2}$ |
+| --- | --- |:---:|
+| S-Refl  | 自反性 | $\frac{}{S <: S}$ |
+| S-Trans | 传递性 | $\frac{S <: U\quad U <: T}{S <: T}$ |
+| S-Top   |       | $\frac{}{S <: unknown}$ |
+| S-Arrow |       | $\frac{T_1 <: S_1\quad S_2 <: T_2}{S_1\rightarrow S_2\ <:\ T_1\rightarrow T_2}$ |
 
 <div class="mt-12">
 
@@ -198,7 +198,7 @@ const toNumber: (x: string) => number | undefined = toLooseNumber;
 函数类型
 
 $$
-\frac{T_1\ <:\ S_1\quad S_2\ <:\ T_2}{S_1\ \rightarrow\ S_2\ <:\ T_1\ \rightarrow\ T_2}
+\frac{T_1 <: S_1\quad S_2 <: T_2}{S_1\rightarrow S_2\ <:\ T_1\rightarrow T_2}
 $$
 
 <div class="text-center">
@@ -413,7 +413,7 @@ $$
 \qquad
 \frac{}{T_1\cap T_2\ <:\ T_2}
 \\[1em]
-\frac{S\ <:\ T_1\quad S<:\ T_2}{S\ <:\ T_1\cap T_2}
+\frac{S <: T_1\quad S <: T_2}{S\ <:\ T_1\cap T_2}
 $$
 
 ```ts {1-5|7-11}
@@ -442,7 +442,7 @@ $$
 \qquad
 \frac{}{T_2\ <:\ T_1\cup T_2}
 \\[1em]
-\frac{T_1\ <:\ S\quad T_2<:\ S}{T_1\cup T_2\ <:\ S}
+\frac{T_1 <: S\quad T_2 <: S}{T_1\cup T_2\ <:\ S}
 $$
 
 ```ts {1-5|7-11}
