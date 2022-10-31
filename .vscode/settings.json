@@ -1,14 +1,10 @@
 {
   "files.eol": "\n",
+  "files.insertFinalNewline": true,
   "editor.tabSize": 2,
-  "cSpell.words": [
-    "pnpm",
-    "shiki",
-    "slidev",
-    "vite"
-  ],
+  "cSpell.words": ["pnpm", "shiki", "slidev", "vite"],
   "cSpell.allowCompoundWords": true,
   "[markdown]": {
-    "editor.defaultFormatter": "vscode.markdown-language-features",
-  },
+    "editor.formatOnSave": false
+  }
 }
