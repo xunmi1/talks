@@ -81,7 +81,7 @@ layout: two-cols
 }
 </style>
 
-## Nominal Type System 
+## Nominal Type System
 
 <p class="opacity-50 !mt-0">名义子类型</p>
 
@@ -109,7 +109,7 @@ T b = a;
 
 ::right::
 
-## Structural Type System 
+## Structural Type System
 
 <p class="opacity-50 !mt-0">结构子类型</p>
 
@@ -131,7 +131,7 @@ type S = {
   readonly add: (value: number | string) => number;
 }
 
-const a: S = {/** ... */} 
+const a: S = {/** ... */}
 const b: T = a;
 ```
 
@@ -245,7 +245,7 @@ list1[0].toFixed();
 ```
 
 ```ts {4-6}
-// lib.es5.d.ts 
+// lib.es5.d.ts
 interface Array<T> {
   // ...
   push(...items: T[]): number;
@@ -258,7 +258,7 @@ interface Array<T> {
 
 <div>
 <v-click>
-  
+
 - `push`: $T$ 在函数类型的参数位置，要求逆变
 - `pop`: $T$ 在函数类型的返回位置，要求协变
 
