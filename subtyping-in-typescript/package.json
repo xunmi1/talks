@@ -7,6 +7,6 @@
     "format": "slidev format"
   },
   "devDependencies": {
-    "@iconify-json/mdi": "^1.1.33"
+    "@iconify-json/mdi": "^1.1.64"
   }
 }
