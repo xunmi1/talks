@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build --base /what-is-the-component/ --out ../dist/what-is-the-component",
+    "export": "slidev export",
+    "format": "slidev format"
+  }
+}

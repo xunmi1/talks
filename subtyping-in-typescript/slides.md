@@ -1,11 +1,13 @@
 ---
 title: Subtyping in TypeScript
-highlighter: shiki
+highlighter: shikiji
 colorSchema: dark
-exportFilename: subtyping-in-typescript.pdf
+exportFilename: 'subtyping-in-typescript'
 favicon: https://api.iconify.design/mdi:language-typescript.svg
 aspectRatio: 16/9
 layout: cover
+htmlAttrs:
+  lang: 'zh-CN'
 ---
 
 # <MdiLanguageTypescript class="text-[#3178c6]" /> Subtyping in TypeScript

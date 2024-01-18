@@ -2,9 +2,10 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "editor.tabSize": 2,
-  "cSpell.words": ["pnpm", "shiki", "slidev", "vite"],
+  "cSpell.words": ["iconify", "pnpm", "shiki", "shikiji", "slidev", "vite"],
   "cSpell.allowCompoundWords": true,
   "[markdown]": {
     "editor.formatOnSave": false
-  }
+  },
+  "markdown.validate.referenceLinks.enabled": "ignore"
 }
