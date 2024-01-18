@@ -3,8 +3,7 @@
   "private": true,
   "author": "xunmi <xunmi1@outlook.com>",
   "scripts": {
-    "build": "rimraf dist && pnpm -r run build",
-    "preview": "vite preview"
+    "build": "rimraf dist && pnpm -r run build"
   },
   "packageManager": "pnpm@8.14.1",
   "devDependencies": {

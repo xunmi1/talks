@@ -18,6 +18,7 @@ htmlAttrs:
 ---
 layout: two-cols
 layoutClass: gap-4 items-center
+title: 比较
 ---
 
 <logos-vue />
@@ -40,7 +41,7 @@ defineEmits(['click']);
 
 ```jsx {all|1,4-7} {at:0}
 function Demo(props) {
-  const { text, children, onClick} = props;
+  const { text, onClick, children } = props;
   return (
     <>
       <div onClick={e => onClick(e)}>{text}</div>
@@ -56,19 +57,7 @@ function Demo(props) {
 # `emits` & `slots`
 事件与插槽
 
-<div class="text-xl">
-
-1. `$emit('click', params)` <carbon-arrows-horizontal /> `props.onClick(params)`
-
-   - `defineEmits(['click'])` = `defineProps(['onClick'])`
-   - `@click="..."` = `:on-click="..."`
-
-2. `<slot name="name" v-bind="params" />` <carbon-arrows-horizontal /> `$slots[name](params)`
-
-</div>
-
-
-<div v-click="1" class="grid grid-cols-[1fr_auto_1fr] gap-4 mt-8">
+<div class="grid grid-cols-[1fr_auto_1fr] gap-4 mt-8">
 
 ```vue {2,3,7,8}
 <script setup>
@@ -96,16 +85,16 @@ defineProps(['text', 'onClick']);
 
 </div>
 
-<div v-click="1" class="mb-4">
-
-> 在 `template` 模板中使用 `<slot />` 或 `<component />` 元素，在 JSX 中可使用 `$slots.default()` 来渲染插槽
-
-</div>
-
 <div v-click>
 
-- 事件是名称以 `on` 开头，类型为函数的“参数”
-- 插槽是以标签形式进行传递、调用，类型为函数的“参数”
+1. `$emit('click', params)` <carbon-arrows-horizontal /> `props.onClick(params)`
+
+   - `defineEmits(['click'])` = `defineProps(['onClick'])`
+   - `@click="..."` = `:onClick="..."`
+
+2. `<slot name="name" v-bind="params" />` <carbon-arrows-horizontal /> `$slots[name](params)`
+
+> 在 `template` 模板中使用 `<slot />` 或 `<component />` 元素，在 JSX 中可使用 `$slots.default()` 来渲染插槽
 
 </div>
 
@@ -120,7 +109,8 @@ defineProps(['text', 'onClick']);
 
 - `props` & `emits` & `slots` <carbon-arrow-right /> 函数参数
 
-  - `emits` & `slots` 是组件的“回调函数”
+  - 事件是名称以 `on` 开头，类型为函数的“参数”
+  - 插槽是以标签形式进行传递、调用，类型为函数的“参数”
 
 - `template` <carbon-arrow-right /> 函数返回值
 
@@ -150,6 +140,19 @@ function Component(props, $emit, $slots) {
 
 
 ---
+layout: quote
+---
+
+# 为什么不统一？
+
+<div v-click>
+
+[“Vue 3 的大部分设计都是戴着镣铐跳舞，需要做很多折衷。”](https://www.zhihu.com/question/453332049/answer/1844784032) - Evan You
+
+</div>
+
+
+---
 
 # Generic Components
 泛型组件
@@ -169,6 +172,8 @@ defineSlots<{
   <slot :text />
 </template>
 ```
+
+v3.3 版本后，使得属性、事件、插槽均获得类型约束，完成组件类型支持的最后一步。
 
 
 ---
@@ -214,13 +219,15 @@ data.value = await (await fetch('/foo')).text();
 
 
 ---
+clicks: 2
+---
 
 # 组件亦是对象
 和参数一样，可以自由传递
 
 <div class="grid grid-cols-[auto_minmax(0,1fr)]">
 
-```vue {all|7|7,20}
+```vue {all|7|7,21}
 <script>
 import { defineComponent, h } from 'vue';
 
@@ -230,6 +237,7 @@ const A = defineComponent({
     return h('div', ['A', this.$slots.default(), h(this.child)]);
   },
 });
+
 const B = defineComponent(() => () => 'B');
 
 export default defineComponent({
@@ -247,7 +255,7 @@ export default defineComponent({
 <VClicks :at="0">
 
 - 调用 `$slots[slotName]()` 渲染插槽
-- 将组件以参数形式传递使用，非 `<script setup>` 模式下也**无需注册组件**
+- 组件以参数形式传递使用，**无需注册**
 
 </VClicks>
 
