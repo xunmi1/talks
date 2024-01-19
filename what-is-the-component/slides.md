@@ -192,9 +192,7 @@ v3.3 版本后，使得属性、事件、插槽均获得类型约束，完成组
 <script setup lang="ts">
 import { shallowRef, onMounted } from 'vue';
 
-defineSlots<{
-  default(props?: { data: string }): unknown
-}>();
+defineOptions({ name: 'AsyncComponent' });
 
 const data = shallowRef<string>();
 data.value = await (await fetch('/foo')).text();

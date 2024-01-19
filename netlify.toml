@@ -6,8 +6,8 @@ publish = "dist"
 command = "pnpm build"
 
 [[redirects]]
-from = "/subtyping-in-typescript/*"
-to = "/subtyping-in-typescript/index.html"
+from = "/:talk/*"
+to = "/:talk/index.html"
 status = 200
 
 [[redirects]]
