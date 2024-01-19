@@ -8,6 +8,8 @@ favicon: https://api.iconify.design/carbon/carbon-for-ibm-dotcom.svg?color=%230e
 exportFilename: what-is-the-component
 htmlAttrs:
   lang: zh-CN
+background: https://images.unsplash.com/photo-1631477076114-9123f721b9dc?w=960
+presenter: dev
 ---
 
 # 什么是组件？
@@ -70,7 +72,7 @@ defineEmits(['click']);
   <slot />
 </template>
 ```
-<carbon-arrows-horizontal class="self-center text-lg text-gray" />
+<CarbonArrowsHorizontal class="self-center text-lg text-gray" />
 
 ```vue {2,6,7}
 <script setup>
@@ -87,14 +89,14 @@ defineProps(['text', 'onClick']);
 
 <div v-click>
 
-1. `$emit('click', params)` <carbon-arrows-horizontal /> `props.onClick(params)`
+1. `$emit('click', params)` <CarbonArrowsHorizontal /> `props.onClick(params)`
 
-   - `defineEmits(['click'])` = `defineProps(['onClick'])`
-   - `@click="..."` = `:onClick="..."`
+   - `defineEmits(['click'])` <MdiEqual /> `defineProps(['onClick'])`
+   - `@click="..."` <MdiEqual /> `:onClick="..."`
 
-2. `<slot name="name" v-bind="params" />` <carbon-arrows-horizontal /> `$slots[name](params)`
+2. `<slot name="name" v-bind="params" />` <CarbonArrowsHorizontal /> `$slots[name](params)`
 
-> 在 `template` 模板中使用 `<slot />` 或 `<component />` 元素，在 JSX 中可使用 `$slots.default()` 来渲染插槽
+> 在 `template` 模板中使用 `<slot />` 或 `<component />` 元素，在 JSX 中可使用 `$slots.default()` 渲染插槽
 
 </div>
 
@@ -107,12 +109,12 @@ defineProps(['text', 'onClick']);
 
 <div>
 
-- `props` & `emits` & `slots` <carbon-arrow-right /> 函数参数
+- `props` & `emits` & `slots` <CarbonArrowRight /> 函数参数
 
   - 事件是名称以 `on` 开头，类型为函数的“参数”
   - 插槽是以标签形式进行传递、调用，类型为函数的“参数”
 
-- `template` <carbon-arrow-right /> 函数返回值
+- `template` <CarbonArrowRight /> 函数返回值
 
 </div>
 
@@ -121,7 +123,7 @@ defineProps(['text', 'onClick']);
 ```js
 function Component(props, $emit, $slots) {
   ...
-  emit(eventName, ...);
+  $emit(eventName, ...);
   return () => (
     <template>
       ...
@@ -137,6 +139,9 @@ function Component(props, $emit, $slots) {
 </div>
 
 不同的是 Vue 组件的入口函数（`setup`）只会执行一次，内部的状态全是持久化的，状态发生变化时，其渲染函数会再次执行
+
+
+> [Native UI](https://www.naiveui.com/) 组件库全部使用 `props` 方式处理事件。
 
 
 ---
@@ -212,8 +217,8 @@ data.value = await (await fetch('/foo')).text();
 
 需配合使用 `<Suspense>` 组件，相当于 `Promise`，两种插槽，两种状态
 
-- `#default` <carbon-arrow-right />  `settled` 状态
-- `#fallback` <carbon-arrow-right />  `pending` 状态
+- `#default` <CarbonArrowRight />  `settled` 状态
+- `#fallback` <CarbonArrowRight />  `pending` 状态
 
 出现异常时，可使用 `onErrorCaptured()` 来捕获和处理。
 
